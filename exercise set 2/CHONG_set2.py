@@ -40,7 +40,9 @@ def shift_letter(letter, shift):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    if letter == ' ':
+            return letter
+    else: return chr(((ord(letter) - ord('A') + shift) % 26) + ord('A'))
 
 def caesar_cipher(message, shift):
     '''Caesar Cipher.
@@ -61,7 +63,12 @@ def caesar_cipher(message, shift):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    def shift_char(letter):
+        if letter == ' ':
+            return letter
+        else: return chr(((ord(letter) - ord('A') + shift) % 26) + ord('A'))
+    
+    return ''.join(map(shift_char, message))
 
 def shift_by_letter(letter, letter_shift):
     '''Shift By Letter.
@@ -90,7 +97,10 @@ def shift_by_letter(letter, letter_shift):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    letter_shift = ord(letter_shift)-65
+    if letter == ' ':
+        return letter
+    else: return chr(((ord(letter) - ord('A') + letter_shift) % 26) + ord('A'))
 
 def vigenere_cipher(message, key):
     '''Vigenere Cipher.
@@ -122,7 +132,18 @@ def vigenere_cipher(message, key):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    def shift_letter(letter, letter_shift):
+            letter_shift = ord(letter_shift)-65
+            if letter == ' ':
+                return letter
+            else: return chr(((ord(letter) - ord('A') + letter_shift) % 26) + ord('A'))
+    if len(message) <= len(key):
+        return ''.join(map(shift_letter,message,key))
+    else: 
+        if type(len(message) - len(key)/len(key)) == type(1) :
+            key = key * (((len(message) - len(key))//len(key))+1)
+        else: key = key * (((len(message) - len(key))//len(key))+1) + key[0:((len(message) - len(key))%len(key))+1]
+    return ''.join(map(shift_letter,message,key))
 
 def scytale_cipher(message, shift):
     '''Scytale Cipher.
@@ -175,7 +196,15 @@ def scytale_cipher(message, shift):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    if len(message)%shift != 0:
+        message = message + "_"*(shift-(len(message)%shift))
+    shifted_letters = []
+    indexer = 0
+    for letter in message: 
+        shifted_letter = message[indexer//shift + (len(message) // shift) * (indexer % shift)]
+        shifted_letters.append(shifted_letter)
+        indexer = indexer + 1
+    return ''.join(shifted_letters)
 
 def scytale_decipher(message, shift):
     '''Scytale De-cipher.
@@ -203,89 +232,6 @@ def scytale_decipher(message, shift):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
-
-
-# # PROBLEM 1
-
-# In[ ]:
-
-
-def shift_letter(letter, shift):
-        if letter == ' ':
-            return letter
-        else: return chr(((ord(letter) - ord('A') + shift) % 26) + ord('A'))
-
-
-# # PROBLEM 2
-
-# In[34]:
-
-
-def caesar_cipher(message, shift):  
-    def shift_char(letter):
-        if letter == ' ':
-            return letter
-        else: return chr(((ord(letter) - ord('A') + shift) % 26) + ord('A'))
-    
-    return ''.join(map(shift_char, message))
-
-
-# # PROBlEM 3
-
-# In[12]:
-
-
-def shift_by_letter(letter, letter_shift):
-    letter_shift = ord(letter_shift)-65
-    if letter == ' ':
-        return letter
-    else: return chr(((ord(letter) - ord('A') + letter_shift) % 26) + ord('A'))
-
-
-# # PROBLEM 4
-
-# In[91]:
-
-
-def vigenere_cipher(message, key):
-    def shift_letter(letter, letter_shift):
-            letter_shift = ord(letter_shift)-65
-            if letter == ' ':
-                return letter
-            else: return chr(((ord(letter) - ord('A') + letter_shift) % 26) + ord('A'))
-    if len(message) <= len(key):
-        return ''.join(map(shift_letter,message,key))
-    else: 
-        if type(len(message) - len(key)/len(key)) == type(1) :
-            key = key * (((len(message) - len(key))//len(key))+1)
-        else: key = key * (((len(message) - len(key))//len(key))+1) + key[0:((len(message) - len(key))%len(key))+1]
-    return ''.join(map(shift_letter,message,key))
-
-
-# # PROBLEM 5
-
-# In[196]:
-
-
-def scytale_cipher(message, shift):
-    if len(message)%shift != 0:
-        message = message + "_"*(shift-(len(message)%shift))
-    shifted_letters = []
-    indexer = 0
-    for letter in message: 
-        shifted_letter = message[indexer//shift + (len(message) // shift) * (indexer % shift)]
-        shifted_letters.append(shifted_letter)
-        indexer = indexer + 1
-    return ''.join(shifted_letters)
-
-
-# # PROBLEM 6
-
-# In[10]:
-
-
-def scytale_decipher(message, shift):
     returned_letters = []
     indexer = -shift
     for letter in message:
